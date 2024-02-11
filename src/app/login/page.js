@@ -1,8 +1,22 @@
+"use client";
+
+import UseAuthorized from '@/auth/UseAuthorized';
 import LoginWithGoogle from '@/components/buttons/LoginWithGoogle'
-import LoginArea from '@/components/login/LoginArea'
-import React from 'react'
+import { redirect } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
 
 const LoginPage = () => {
+    let [user, setUser] = useState(null);
+    useEffect(() => {
+        UseAuthorized()
+            .then((snapshot) => {
+                setUser(snapshot);
+            })
+    }, []);
+
+    if(user){
+        redirect('/');
+    }
     return (
         <div className='pt-32'>
             <div className="p-4 max-w-xs mx-auto">
@@ -14,7 +28,6 @@ const LoginPage = () => {
                 </p>
                 <LoginWithGoogle />
             </div>
-            <LoginArea />
         </div>
     )
 }

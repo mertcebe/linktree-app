@@ -1,17 +1,11 @@
 "use client";
-import Header from "@/components/Header";
 import HeroForm from "@/components/forms/HeroForm";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
 export default function Home() {
-  const session = useSession({
-    required: true,
-    onUnauthenticated() {
-      redirect('/signin');
-    },
-  });
+  const session = false;
   return (
     <main className="">
       <section className="pt-32 px-6 max-w-4xl mx-auto">
@@ -27,10 +21,10 @@ export default function Home() {
       </section>
 
       {/* next auth */}
-      <div className="p-8">
+      {/* <div className="p-8">
         <div className=''>{session?.data?.user?.email}</div>
         <button className='' onClick={() => signOut()}>Logout</button>
-      </div>
+      </div> */}
     </main>
   );
 }

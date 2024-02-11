@@ -1,19 +1,21 @@
 'use client';
 
+import { auth, provider } from "@/firebase/firebaseConfig";
+import { signInWithRedirect } from "firebase/auth";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function HeroForm({ user }) {
     const router = useRouter();
     useEffect(() => {
-        // if (
-        //     'localStorage' in window
-        //     && window.localStorage.getItem('desiredUsername')
-        // ) {
-        //     const username = window.localStorage.getItem('desiredUsername');
-        //     window.localStorage.removeItem('desiredUsername');
-        //     redirect('/account?desiredUsername=' + username);
-        // }
+        if (
+            'localStorage' in window
+            && window.localStorage.getItem('desiredUsername')
+        ) {
+            const username = window.localStorage.getItem('desiredUsername');
+            window.localStorage.removeItem('desiredUsername');
+            redirect('/account?desiredUsername=' + username);
+        }
     }, []);
     async function handleSubmit(ev) {
         ev.preventDefault();
@@ -25,7 +27,7 @@ export default function HeroForm({ user }) {
                 router.push('/account?desiredUsername=' + username);
             } else {
                 window.localStorage.setItem('desiredUsername', username);
-                // await signIn('google');
+                await signInWithRedirect(auth, provider);
             }
         }
     }
@@ -40,7 +42,8 @@ export default function HeroForm({ user }) {
                 type="text"
                 className=""
                 style={{ backgroundColor: 'white', marginBottom: 0, paddingLeft: 0 }}
-                placeholder="username" />
+                placeholder="username"
+                />
             <button
                 type="submit"
                 className="bg-blue-500 text-white py-4 px-6 whitespace-nowrap">

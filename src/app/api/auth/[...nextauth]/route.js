@@ -4,6 +4,7 @@ import { FirestoreAdapter } from "@next-auth/firebase-adapter"
 import firebase from "firebase/app"
 import "firebase/firestore"
 import CredentialsProvider from "next-auth/providers/credentials";
+import { auth } from "@/firebase/firebaseConfig"
 
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     throw new Error("Google client ID and client secret are required.")
